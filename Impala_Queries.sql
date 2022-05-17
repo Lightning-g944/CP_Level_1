@@ -91,3 +91,30 @@ SELECT
 FROM employees
 GROUP BY last_name
 ORDER BY count(last_name) DESC;
+
+--9. Histogram to show the salary distribution among the employee.
+
+CREATE view BINS as
+SELECT
+    CASE 
+        WHEN s.salary >= 40000 and s.salary < 50000 THEN '40k-50k'
+        WHEN s.salary >= 50000 and s.salary <60000 THEN '50k-60k'
+        WHEN s.salary >= 60000 and s.salary < 70000 THEN '60k-70k'
+        WHEN s.salary >= 70000 and s.salary < 80000 THEN '70k-80k'
+        WHEN s.salary >= 80000 and s.salary < 90000 THEN '80k-90k'
+        WHEN s.salary >= 90000 and s.salary < 100000 THEN '90k-100k'
+        WHEN s.salary >= 100000 and s.salary < 110000 THEN '100k-110k'
+        WHEN s.salary >= 110000 and s.salary < 120000 THEN '110k-120k'
+        WHEN s.salary >= 120000 and s.salary < 130000 THEN '120k-130k'
+        ELSE 'NA'
+        END as Bins
+FROM employees e
+JOIN salaries s
+on s.emp_no = e.emp_no;
+
+SELECT 
+    bins,
+    count(bins) as salary_range
+from bins
+GROUP BY bins
+ORDER BY salary_range DESC;
