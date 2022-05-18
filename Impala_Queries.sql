@@ -118,3 +118,15 @@ SELECT
 from bins
 GROUP BY bins
 ORDER BY salary_range DESC;
+
+--10. Bar graph to show Avg salary per title (designation)
+
+SELECT
+    t.title,
+    avg(s.salary) as Avg_Salary
+FROM employees e
+JOIN titles t
+ON t.title_id = e.emp_title_id
+JOIN salaries s
+ON s.emp_no = e.emp_no
+GROUP BY t.title;
