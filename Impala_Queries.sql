@@ -160,7 +160,7 @@ SELECT
     first_name,
     last_name,
     2000-year(hire_date) as tenure
-FROM emp_final
+FROM employees_final
 order by tenure desc
 
     SELECT
@@ -171,8 +171,75 @@ order by tenure desc
             WHEN 2000-year(hire_date) <= 5  AND 2000-year(hire_date) >=1 THEN '1-5 years exp'
             ELSE 'FRESHER'
             END as Experience
-        FROM emp_final e
+        FROM employees_final e
 JOIN capstone_hadoop_rk.titles t
 ON t.title_id = e.emp_title_id
+
+-- 12. Addition Analysis
+
+-- 1. The tenure for each Title
+
+SELECT
+    t.title,
+    2000-year(e.hire_date) as tenure
+FROM employees_final e
+JOIN titles t
+ON t.title_id = e.emp_title_id
+GROUP BY tenure, t.title 
+order by tenure desc;
+
+-- 2. Employees left the organization and there respective Tenure and Title when they left
+
+select
+    t.title,
+    e.emp_no as Employees_left,
+    2000-year(e.hire_date) as Tenure
+    from employees_final e
+    inner join titles t
+    on t.title_id = e.emp_title_id
+    where left_ = 1;
+	
+-- 3. Total number of projects in every department
+
+select
+        d.dept_name,
+        sum(no_of_projects) as Total_Projects
+    from employees_final e
+    inner join department_employees de
+    on e.emp_no = de.emp_no
+    inner join departments d
+    on d.dept_no = de.dept_no
+    group by d.dept_name
+    order by Total_Projects desc;
+	
+-- 4. Number of Employees who left in the last 5 year
+
+select max(year(last_date)) from employees_final;
+
+select
+    count(e.emp_no) as Employees_left_in_5_yrs
+    from employees_final e
+    inner join titles t
+    on t.title_id = e.emp_title_id
+    where left_ = 1 and year(e.last_date) >= 2009;
+	
+-- 5. Number of Employees in each rating category
+
+select
+    last_performance_ratings as rating,
+    count(emp_no) as No_of_employees
+from emp_final
+group by rating
+order by No_of_employees;
+
+
+select
+    last_performance_ratings as rating,
+    count(emp_no) as No_of_employees,
+    sex
+from emp_final
+group by rating, sex
+order by No_of_employees;
+
   
   
