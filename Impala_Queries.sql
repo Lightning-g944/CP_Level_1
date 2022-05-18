@@ -87,6 +87,7 @@ WHERE d.dept_name = '"Sales"' OR d.dept_name = '"development"';
 --8. A list showing the frequency count of employee last name, in descending order (i.e., how many
 --		employees share each last name)
 SELECT
+	last_name,
     count(last_name) as Frequency
 FROM employees
 GROUP BY last_name
@@ -130,3 +131,48 @@ ON t.title_id = e.emp_title_id
 JOIN salaries s
 ON s.emp_no = e.emp_no
 GROUP BY t.title;
+
+--11. Calculate employee tenure and show tenure distribution among the employees.
+
+CREATE table Employees_final as
+SELECT
+    emp_no as emp_no,
+    emp_title_id as emp_title_id,
+    cast(concat(substring_index((substring_index(birth_date,'/',3)),'/',-1),'-',
+            substring_index((substring_index(birth_date,'/',1)),'/',-1),'-',
+            substring_index((substring_index(birth_date,'/',2)),'/',-1)) as DATE) as birth_date,
+    first_name as first_name,
+    last_name as last_name,
+    sex as sex,
+    cast(concat(substring_index((substring_index(hire_date,'/',3)),'/',-1),'-',
+            substring_index((substring_index(hire_date,'/',1)),'/',-1),'-',
+            substring_index((substring_index(hire_date,'/',2)),'/',-1)) as DATE) as Hire_date,
+    no_of_projects as no_of_projects,
+    last_performance_ratings as last_performance_ratings,
+    cast(left1 as int) as left_,
+     cast(concat(substring_index((substring_index(last_date,'/',3)),'/',-1),'-',
+            substring_index((substring_index(last_date,'/',1)),'/',-1),'-',
+            substring_index((substring_index(last_date,'/',2)),'/',-1)) as DATE)
+from employees;
+
+SELECT
+    emp_no,
+    first_name,
+    last_name,
+    2000-year(hire_date) as tenure
+FROM emp_final
+order by tenure desc
+
+    SELECT
+    e.emp_no,
+        CASE
+            WHEN 2000-year(hire_date) <= 15 AND 2000-year(hire_date) >=10 THEN '10+ years exp'
+            WHEN 2000-year(hire_date) <= 10 AND 2000-year(hire_date) >=5 THEN '5-10 years exp'
+            WHEN 2000-year(hire_date) <= 5  AND 2000-year(hire_date) >=1 THEN '1-5 years exp'
+            ELSE 'FRESHER'
+            END as Experience
+        FROM emp_final e
+JOIN capstone_hadoop_rk.titles t
+ON t.title_id = e.emp_title_id
+  
+  
