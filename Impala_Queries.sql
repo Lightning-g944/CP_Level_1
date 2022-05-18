@@ -146,13 +146,13 @@ SELECT
     sex as sex,
     cast(concat(substring_index((substring_index(hire_date,'/',3)),'/',-1),'-',
             substring_index((substring_index(hire_date,'/',1)),'/',-1),'-',
-            substring_index((substring_index(hire_date,'/',2)),'/',-1)) as DATE) as Hire_date,
+            substring_index((substring_index(hire_date,'/',2)),'/',-1)) as DATE) as hire_date,
     no_of_projects as no_of_projects,
     last_performance_ratings as last_performance_ratings,
     cast(left1 as int) as left_,
      cast(concat(substring_index((substring_index(last_date,'/',3)),'/',-1),'-',
             substring_index((substring_index(last_date,'/',1)),'/',-1),'-',
-            substring_index((substring_index(last_date,'/',2)),'/',-1)) as DATE)
+            substring_index((substring_index(last_date,'/',2)),'/',-1)) as DATE) as last_date
 from employees;
 
 SELECT
