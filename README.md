@@ -1,6 +1,6 @@
-# CP_Level_1
+# Data Engineering - Captone End to End Pipeline
 
-###
+### CREATION OF MYSQL TABLES AND LOADING DATA INTO TABLES
 
 ##### To Create SQL Tables with schema run the following command in shell
 mysql -u anabig114221 -pBigdata123 create_table.sql
