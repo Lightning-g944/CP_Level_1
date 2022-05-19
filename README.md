@@ -270,3 +270,5 @@ spark = SparkSession.builder.appName('Project').getorCreate()
 ```
 Run in below syntax
 `spark.sql("""select * from employees""").show()`
+
+for spark EDA and spark ML check their respective folders for jupyternote book files
