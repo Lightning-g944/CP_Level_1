@@ -36,6 +36,7 @@ hadoop fs -put /home/anabig114221/Salaries.avsc /user/anabig114221/capstone/Sala
 hadoop fs -put /home/anabig114221/Titles.avsc /user/anabig114221/capstone/Titles.avsc
 
 ##NOW WE CREATE EXTERNAL TABLES IN THE HIVE DATABASE
+DROP DATABASE IF EXISTS capstone_hadoop_rk;
 CREATE DATABASE capstone_hadoop_rk;
 
 USE capstone_hadoop_rk;
